@@ -975,6 +975,39 @@ h1 {
   background: rgba(7, 94, 234, 0.08);
 }
 
+.article-image {
+  margin: 30px 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.article-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.article-image figcaption {
+  padding: 12px 14px;
+  color: var(--soft-ink);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.article-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 30px 0;
+}
+
+.article-gallery .article-image {
+  margin: 0;
+}
+
 .inline-diagram {
   margin: 30px 0;
   padding: 20px;
@@ -1261,6 +1294,31 @@ h1 {
   border-color: var(--blue);
 }
 
+.security-note {
+  display: grid;
+  gap: 6px;
+  max-width: 720px;
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid rgba(188, 24, 35, 0.22);
+  border-radius: 8px;
+  background: rgba(188, 24, 35, 0.06);
+  color: #5f1820;
+}
+
+.security-note strong {
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.security-note span {
+  color: #3d2a2d;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
 .form-message {
   min-height: 22px;
   margin: 0;
@@ -1491,6 +1549,10 @@ h1 {
 
   .source-crop {
     padding: 12px;
+  }
+
+  .article-gallery {
+    grid-template-columns: 1fr;
   }
 
   .guide-card h3 {

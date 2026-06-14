@@ -27,7 +27,7 @@ function getSession() {
 }
 
 function setSession(user) {
-  localStorage.setItem(AUTH_KEY, JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+  localStorage.setItem(AUTH_KEY, JSON.stringify({ id: user.id, email: user.email }));
 }
 
 function logout() {
@@ -55,8 +55,9 @@ function articleUrl(article) {
 
 function renderHeader() {
   const session = getSession();
+  const memberLabel = session ? session.email.split("@")[0] : "";
   headerActions.innerHTML = session
-    ? `<span class="member-chip">${escapeHtml(session.name)}さん</span><button class="ghost-button" data-logout>ログアウト</button>`
+    ? `<span class="member-chip">${escapeHtml(memberLabel)}さん</span><button class="ghost-button" data-logout>ログアウト</button>`
     : `<a class="ghost-button" href="#login">ログイン</a><a class="primary-button compact" href="#register">新規登録</a>`;
 
   const logoutButton = headerActions.querySelector("[data-logout]");
@@ -129,8 +130,8 @@ function renderHome() {
           <strong>${session ? "ログイン中。会員限定記事を読めます。" : "ログインすると会員限定記事を読めます。"}</strong>
         </div>
         <div class="memo-card">
-          <span>Invite codes</span>
-          <strong>初期招待コード: PREFLOP-2026 / YUJI-WEEKLY / RANGE-LAB</strong>
+          <span>Invitation</span>
+          <strong>招待コードは管理者から共有された人だけが登録に使えます。</strong>
         </div>
         <div class="memo-card">
           <span>Next article</span>
@@ -261,6 +262,14 @@ function renderBlock(block) {
       <figure class="source-crop"><figcaption>${escapeHtml(item.title)}</figcaption><img src="${item.src}" alt="${escapeHtml(item.alt)}" /></figure>
     `).join("")}</div>`;
   }
+  if (block.type === "image") {
+    return `<figure class="article-image"><img src="${block.src}" alt="${escapeHtml(block.alt || "")}" /><figcaption>${escapeHtml(block.caption || block.alt || "")}</figcaption></figure>`;
+  }
+  if (block.type === "image-gallery") {
+    return `<div class="article-gallery">${block.items.map((item) => `
+      <figure class="article-image"><img src="${item.src}" alt="${escapeHtml(item.alt || "")}" /><figcaption>${escapeHtml(item.caption || item.alt || "")}</figcaption></figure>
+    `).join("")}</div>`;
+  }
   if (block.type === "equity") {
     return `<div class="inline-diagram equity-process"><div class="process-steps">${block.streets.map((street, index) => `
       <div><span>${index + 1}</span><strong>${escapeHtml(street[0])}</strong><small>${escapeHtml(street[1])} / ${escapeHtml(street[2])}</small></div>
@@ -276,11 +285,14 @@ function renderAuth(mode) {
       <p class="eyebrow">${isLogin ? "Login" : "Invitation Signup"}</p>
       <h1>${isLogin ? "ログイン" : "招待コードで新規登録"}</h1>
       <p>${isLogin ? "登録済みのIDとパスワードで会員記事へ入れます。" : "招待コードを持っている人だけが登録できます。"}</p>
+      <div class="security-note">
+        <strong>共有前の注意</strong>
+        <span>現在のログインはテスト用の簡易実装です。大事なパスワードは使わず、本番運用ではSupabase Authなどの認証サービスに切り替えます。</span>
+      </div>
       <form class="auth-form" id="authForm">
-        ${isLogin ? "" : '<label>名前<input name="name" autocomplete="name" required placeholder="例: 佐倉 千夏" /></label>'}
         <label>ログインID / メール<input name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
         <label>パスワード<input name="password" type="password" autocomplete="${isLogin ? "current-password" : "new-password"}" required minlength="6" placeholder="6文字以上" /></label>
-        ${isLogin ? "" : '<label>招待コード<input name="invite" required placeholder="PREFLOP-2026" /></label>'}
+        ${isLogin ? "" : '<label>招待コード<input name="invite" required placeholder="招待コードを入力" /></label>'}
         <button class="primary-button" type="submit">${isLogin ? "ログインする" : "登録する"}</button>
         <p class="form-message" id="formMessage"></p>
       </form>
@@ -316,7 +328,7 @@ function renderAuth(mode) {
       message.textContent = "このIDはすでに登録されています。";
       return;
     }
-    const user = { id: crypto.randomUUID(), name: String(form.get("name")).trim(), email, password, invite, createdAt: new Date().toISOString() };
+    const user = { id: crypto.randomUUID(), email, password, invite, createdAt: new Date().toISOString() };
     users.push(user);
     saveUsers(users);
     setSession(user);
