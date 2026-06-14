@@ -1,6 +1,11 @@
 const AUTH_KEY = "preflop_member_session";
 const USERS_KEY = "preflop_member_users";
 const INVITE_CODES = ["PREFLOP-2026", "YUJI-WEEKLY", "RANGE-LAB"];
+const SUPABASE_CONFIG = window.PREFLOP_SUPABASE_CONFIG || {};
+const supabaseClient = createSupabaseClient();
+
+let currentSession = null;
+let authReady = !supabaseClient;
 
 const rangeData = {
   UTG: ["15%", "後ろに5人。強いハンド中心で参加。", "AA KK QQ AKs", "JJ TT AQs AKo"],
@@ -14,6 +19,12 @@ const rangeData = {
 const app = document.querySelector("#app");
 const headerActions = document.querySelector("#headerActions");
 
+function createSupabaseClient() {
+  if (!SUPABASE_CONFIG.enabled) return null;
+  if (!window.supabase || !SUPABASE_CONFIG.url || !SUPABASE_CONFIG.anonKey) return null;
+  return window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+}
+
 function getUsers() {
   return JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
 }
@@ -23,6 +34,7 @@ function saveUsers(users) {
 }
 
 function getSession() {
+  if (supabaseClient) return currentSession;
   return JSON.parse(localStorage.getItem(AUTH_KEY) || "null");
 }
 
@@ -31,8 +43,53 @@ function setSession(user) {
 }
 
 function logout() {
+  if (supabaseClient) {
+    supabaseClient.auth.signOut().finally(() => {
+      currentSession = null;
+      render();
+    });
+    return;
+  }
   localStorage.removeItem(AUTH_KEY);
   render();
+}
+
+async function loadSupabaseSession() {
+  if (!supabaseClient) return;
+  authReady = false;
+  const { data } = await supabaseClient.auth.getSession();
+  currentSession = data.session ? await buildSupabaseSession(data.session.user) : null;
+  authReady = true;
+}
+
+async function buildSupabaseSession(user) {
+  const profile = await fetchMemberProfile(user.id);
+  return {
+    id: user.id,
+    email: user.email,
+    membershipStatus: profile?.membership_status || "inactive",
+    plan: profile?.plan || "free"
+  };
+}
+
+async function fetchMemberProfile(userId) {
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("membership_status, plan")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (error) {
+    console.warn("Failed to load member profile", error);
+    return null;
+  }
+  return data;
+}
+
+function hasMemberAccess(session = getSession()) {
+  if (!session) return false;
+  if (!supabaseClient) return true;
+  return ["free", "trialing", "active"].includes(session.membershipStatus);
 }
 
 function escapeHtml(value = "") {
@@ -127,7 +184,7 @@ function renderHome() {
       <aside class="memo-stack">
         <div class="memo-card accent">
           <span>Status</span>
-          <strong>${session ? "ログイン中。会員限定記事を読めます。" : "ログインすると会員限定記事を読めます。"}</strong>
+          <strong>${session ? (hasMemberAccess(session) ? "ログイン中。会員限定記事を読めます。" : "ログイン済み。会員権限の確認待ちです。") : "ログインすると会員限定記事を読めます。"}</strong>
         </div>
         <div class="memo-card">
           <span>Invitation</span>
@@ -220,12 +277,17 @@ function renderArticle(id) {
     return;
   }
 
-  if (article.memberOnly && !getSession()) {
+  if (!authReady) {
+    app.innerHTML = `<section class="auth-shell"><p class="eyebrow">Checking</p><h1>ログイン状態を確認しています。</h1></section>`;
+    return;
+  }
+
+  if (article.memberOnly && !hasMemberAccess()) {
     app.innerHTML = `
       <section class="auth-shell">
         <p class="eyebrow">Members Only</p>
         <h1>この記事は会員限定です。</h1>
-        <p>ログイン、または招待コードで新規登録すると読めます。</p>
+        <p>${getSession() ? "このアカウントには現在、会員記事の閲覧権限がありません。" : "ログイン、または招待コードで新規登録すると読めます。"}</p>
         <div class="hero-actions"><a class="primary-button" href="#login">ログイン</a><a class="secondary-button" href="#register">新規登録</a></div>
       </section>
     `;
@@ -286,8 +348,8 @@ function renderAuth(mode) {
       <h1>${isLogin ? "ログイン" : "招待コードで新規登録"}</h1>
       <p>${isLogin ? "登録済みのIDとパスワードで会員記事へ入れます。" : "招待コードを持っている人だけが登録できます。"}</p>
       <div class="security-note">
-        <strong>共有前の注意</strong>
-        <span>現在のログインはテスト用の簡易実装です。大事なパスワードは使わず、本番運用ではSupabase Authなどの認証サービスに切り替えます。</span>
+        <strong>${supabaseClient ? "会員管理" : "共有前の注意"}</strong>
+        <span>${supabaseClient ? "ログイン情報と会員ステータスはSupabaseで管理されます。" : "現在のログインはテスト用の簡易実装です。大事なパスワードは使わず、本番運用ではSupabase Authなどの認証サービスに切り替えます。"}</span>
       </div>
       <form class="auth-form" id="authForm">
         <label>ログインID / メール<input name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
@@ -300,13 +362,20 @@ function renderAuth(mode) {
     </section>
   `;
 
-  document.querySelector("#authForm").addEventListener("submit", (event) => {
+  document.querySelector("#authForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email")).trim().toLowerCase();
     const password = String(form.get("password"));
-    const users = getUsers();
     const message = document.querySelector("#formMessage");
+    message.textContent = "";
+
+    if (supabaseClient) {
+      await handleSupabaseAuth({ isLogin, email, password, invite: String(form.get("invite") || "").trim().toUpperCase(), message });
+      return;
+    }
+
+    const users = getUsers();
 
     if (isLogin) {
       const user = users.find((item) => item.email === email && item.password === password);
@@ -336,6 +405,63 @@ function renderAuth(mode) {
   });
 }
 
+async function handleSupabaseAuth({ isLogin, email, password, invite, message }) {
+  if (isLogin) {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      message.textContent = "IDまたはパスワードが違います。";
+      return;
+    }
+    await claimPendingInvite(data.user);
+    currentSession = await buildSupabaseSession(data.user);
+    location.hash = "#articles";
+    return;
+  }
+
+  if (!invite) {
+    message.textContent = "招待コードを入力してください。";
+    return;
+  }
+
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: { data: { invite_code: invite } }
+  });
+
+  if (error) {
+    message.textContent = error.message;
+    return;
+  }
+
+  if (!data.session) {
+    message.textContent = "確認メールを送信しました。メール確認後にログインしてください。";
+    return;
+  }
+
+  const claimResult = await supabaseClient.rpc("claim_invite_code", { invite_code_input: invite });
+  if (claimResult.error) {
+    await supabaseClient.auth.signOut();
+    currentSession = null;
+    message.textContent = "招待コードが正しくないか、すでに使用されています。";
+    return;
+  }
+
+  currentSession = await buildSupabaseSession(data.user);
+  location.hash = "#articles";
+}
+
+async function claimPendingInvite(user) {
+  const invite = String(user?.user_metadata?.invite_code || "").trim().toUpperCase();
+  if (!invite) return;
+
+  const profile = await fetchMemberProfile(user.id);
+  if (profile && profile.membership_status !== "inactive") return;
+
+  const { error } = await supabaseClient.rpc("claim_invite_code", { invite_code_input: invite });
+  if (error) console.warn("Failed to claim pending invite", error);
+}
+
 function render() {
   renderHeader();
   const hash = location.hash || "#home";
@@ -350,5 +476,18 @@ function render() {
   app.focus({ preventScroll: true });
 }
 
-window.addEventListener("hashchange", render);
-render();
+async function init() {
+  if (supabaseClient) {
+    await loadSupabaseSession();
+    supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+      currentSession = session ? await buildSupabaseSession(session.user) : null;
+      authReady = true;
+      render();
+    });
+  }
+
+  window.addEventListener("hashchange", render);
+  render();
+}
+
+init();

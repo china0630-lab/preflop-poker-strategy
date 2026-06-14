@@ -2,13 +2,14 @@
 
 ## 現在の状態
 
-現時点では、会員登録とログインはフロントエンドだけの簡易実装です。
+Supabase設定を入れると、会員登録とログイン情報はSupabase Authで管理できます。
+Supabase未設定時だけ、フロントエンドの簡易実装にフォールバックします。
 
-- ユーザー情報: `localStorage`
-- 招待コード: `script.js` 内の `INVITE_CODES`
-- 会員限定制御: ブラウザ上の表示制御
+- ユーザー情報: Supabase Auth
+- 招待コード: Supabase `invite_codes`
+- 会員状態: Supabase `profiles.membership_status`
 
-これはベース確認用で、本番のセキュリティ用途には不十分です。
+セットアップ手順は `docs/supabase-member-management.md` を参照してください。
 
 ## 入力項目の方針
 
@@ -21,9 +22,9 @@
 
 ## 本番で必要なもの
 
-- サーバー側のユーザー管理
-- パスワードの安全な保存
-- 招待コードのサーバー側検証
+- サーバー側のユーザー管理: Supabase Authで対応
+- パスワードの安全な保存: Supabase Authで対応
+- 招待コードのサーバー側検証: `claim_invite_code` で対応
 - 会員限定コンテンツのサーバー側保護
 - パスワード再設定
 - 管理者による招待コード発行
