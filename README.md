@@ -1,4 +1,4 @@
-# PreFlop ポーカー攻略班
+# PreFlopポーカー攻略
 
 会員制ポーカー攻略サイトの静的プロトタイプです。
 
@@ -13,7 +13,7 @@
 ## 公開URL
 
 ```text
-https://china0630-lab.github.io/preflop-poker-members/
+https://china0630-lab.github.io/preflop-poker-strategy/
 ```
 
 ## 毎週の記事更新
@@ -38,9 +38,9 @@ node scripts/add-article.mjs drafts/weekly-article-sample.md --image /path/to/im
 
 GitHub Pagesを使っているため、毎週記事を追加しても公開URLは変わりません。
 
-- Repository: `https://github.com/china0630-lab/preflop-poker-members`
+- Repository: `https://github.com/china0630-lab/preflop-poker-strategy`
 - Pages source: `main` branch / `/ (root)`
-- Live URL: `https://china0630-lab.github.io/preflop-poker-members/`
+- Live URL: `https://china0630-lab.github.io/preflop-poker-strategy/`
 
 以後は、記事を追加して`main`へpushするだけで同じURLが更新されます。
 
