@@ -975,6 +975,154 @@ h1 {
   background: rgba(7, 94, 234, 0.08);
 }
 
+.key-value-block {
+  margin: 28px 0;
+  padding: 24px;
+  border: 1px solid rgba(7, 94, 234, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(7, 94, 234, 0.1), transparent 52%),
+    #fff;
+  box-shadow: var(--shadow);
+}
+
+.key-value-block span,
+.compare-grid span,
+.scenario-box span,
+.stack-pressure span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.key-value-block strong {
+  display: block;
+  color: var(--ink);
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.25;
+}
+
+.key-value-block p {
+  max-width: 620px;
+  margin: 12px 0 0;
+  color: var(--soft-ink);
+}
+
+.compare-grid,
+.stack-pressure {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.compare-grid section,
+.stack-pressure section,
+.scenario-box,
+.article-checklist {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.compare-grid section,
+.stack-pressure section {
+  padding: 20px;
+}
+
+.compare-grid strong,
+.stack-pressure strong {
+  display: block;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.compare-grid p,
+.stack-pressure p {
+  margin: 10px 0 0;
+  color: var(--soft-ink);
+  font-size: 14px;
+}
+
+.scenario-box {
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.scenario-box > div:first-child {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  background: #f8fbff;
+}
+
+.scenario-box strong {
+  display: block;
+  color: var(--ink);
+  font-size: 21px;
+  line-height: 1.45;
+}
+
+.scenario-box dl {
+  display: grid;
+  margin: 0;
+}
+
+.scenario-box dl div {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.scenario-box dt {
+  color: var(--soft-ink);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.scenario-box dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.scenario-box > p {
+  margin: 0;
+  padding: 16px 22px;
+  color: var(--soft-ink);
+  background: #fffdf5;
+}
+
+.article-checklist {
+  margin: 30px 0;
+  padding: 22px;
+}
+
+.article-checklist h3 {
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-size: 20px;
+}
+
+.article-checklist ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 24px;
+}
+
+.article-checklist li {
+  padding-left: 4px;
+  color: var(--ink);
+  font-weight: 800;
+}
+
 .article-image {
   margin: 30px 0;
   overflow: hidden;
@@ -1485,8 +1633,15 @@ h1 {
   .probability-flow,
   .equity-visual,
   .equity-box,
+  .compare-grid,
+  .stack-pressure,
   .process-steps {
     grid-template-columns: 1fr;
+  }
+
+  .scenario-box dl div {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
   .lab-panel {

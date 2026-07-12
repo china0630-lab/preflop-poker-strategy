@@ -239,14 +239,15 @@ function wireRangeTool() {
 }
 
 function renderArticleList(articles = window.PREFLOP_ARTICLES) {
+  const sortedArticles = [...articles].sort((a, b) => b.date.localeCompare(a.date));
   return `
     <section id="articles" class="article-library">
       <div class="section-head">
-        <div><p class="eyebrow">Article Library</p><h2>毎週増えていく攻略記事</h2></div>
+        <div><p class="eyebrow">Article Library / ${sortedArticles.length} guides</p><h2>毎週増えていく攻略記事</h2></div>
         <label class="search library-search"><span>Search</span><input id="articleSearch" type="search" placeholder="記事を探す" /></label>
       </div>
       <div class="cards" id="articleCards">
-        ${articles.map((article) => `
+        ${sortedArticles.map((article) => `
           <article class="article-card" data-title="${escapeHtml(article.title)} ${escapeHtml(article.category)} ${escapeHtml(article.tags.join(" "))}">
             <span>${escapeHtml(article.category)} / ${formatDate(article.date)}</span>
             <h3>${escapeHtml(article.title)}</h3>
@@ -319,6 +320,46 @@ function renderBlock(block) {
   if (block.type === "heading") return `<h2>${escapeHtml(block.text)}</h2>`;
   if (block.type === "paragraph") return `<p>${escapeHtml(block.text)}</p>`;
   if (block.type === "callout") return `<div class="callout"><strong>${escapeHtml(block.text)}</strong></div>`;
+  if (block.type === "key-value") {
+    return `<div class="key-value-block">
+      <span>${escapeHtml(block.label)}</span>
+      <strong>${escapeHtml(block.value)}</strong>
+      ${block.note ? `<p>${escapeHtml(block.note)}</p>` : ""}
+    </div>`;
+  }
+  if (block.type === "compare") {
+    return `<div class="compare-grid">${block.items.map((item) => `
+      <section>
+        <span>${escapeHtml(item.label)}</span>
+        <strong>${escapeHtml(item.title)}</strong>
+        <p>${escapeHtml(item.text)}</p>
+      </section>
+    `).join("")}</div>`;
+  }
+  if (block.type === "scenario") {
+    return `<div class="scenario-box">
+      <div><span>${escapeHtml(block.kicker || "Example")}</span><strong>${escapeHtml(block.title)}</strong></div>
+      <dl>${block.rows.map((row) => `<div><dt>${escapeHtml(row[0])}</dt><dd>${escapeHtml(row[1])}</dd></div>`).join("")}</dl>
+      ${block.note ? `<p>${escapeHtml(block.note)}</p>` : ""}
+    </div>`;
+  }
+  if (block.type === "checklist") {
+    return `<div class="article-checklist">
+      ${block.title ? `<h3>${escapeHtml(block.title)}</h3>` : ""}
+      <ol>${block.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+    </div>`;
+  }
+  if (block.type === "stack-pressure") {
+    return `<div class="stack-pressure">
+      ${block.items.map((item) => `
+        <section>
+          <span>${escapeHtml(item.stack)}</span>
+          <strong>${escapeHtml(item.title)}</strong>
+          <p>${escapeHtml(item.text)}</p>
+        </section>
+      `).join("")}
+    </div>`;
+  }
   if (block.type === "image-pair") {
     return `<div class="source-splits">${block.items.map((item) => `
       <figure class="source-crop"><figcaption>${escapeHtml(item.title)}</figcaption><img src="${item.src}" alt="${escapeHtml(item.alt)}" /></figure>
