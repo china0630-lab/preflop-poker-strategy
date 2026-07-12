@@ -25,7 +25,7 @@ function articleUrl(article) {
 }
 
 function sortedArticles() {
-  return [...articles].sort((a, b) => a.date.localeCompare(b.date));
+  return [...articles].sort((a, b) => (a.order || 999) - (b.order || 999) || a.date.localeCompare(b.date));
 }
 
 function episodeLabel(index) {
@@ -39,7 +39,7 @@ function renderHome() {
     <section class="hero compact-hero">
       <div class="hero-copy">
         <p class="eyebrow">PreFlop Poker Guide</p>
-        <h1>PreFlopポーカー攻略</h1>
+        <h1>プリフロップ大宮ポーカー攻略</h1>
         <p class="lead">
           ゆうきさんの記事とX投稿を、スマホでも読みやすい順番に整理したページです。
         </p>
@@ -69,7 +69,7 @@ function renderRoadmapFeature() {
         </div>
       </div>
       <figure class="roadmap-image">
-        <img src="./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg?v=20260712-roadmap-article-v5" alt="GINGA式トーナメント強化ロードマップ" />
+        <img src="./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg?v=20260712-stable-links-v9" alt="GINGA式トーナメント強化ロードマップ" />
       </figure>
       <a class="roadmap-link" href="${roadmapHref}">ロードマップ記事を読む</a>
     </section>
@@ -101,12 +101,12 @@ function renderArticleGrid(items, title, subtitle) {
           <article class="article-card">
             ${article.heroImage ? `
               <figure class="card-thumb">
-                <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-article-v5" alt="" />
+                <img src="${escapeHtml(article.heroImage)}?v=20260712-stable-links-v9" alt="" />
               </figure>
             ` : ""}
             <div class="article-card-body">
               <div class="card-meta">
-                <span>${episodeLabel(index)}</span>
+                <span>${episodeLabel(article.order ? article.order - 1 : index)}</span>
                 <span>${escapeHtml(article.category)}</span>
                 <span>${formatDate(article.date)}</span>
                 <span>読了 ${escapeHtml(article.readTime)}</span>
@@ -152,7 +152,7 @@ function renderArticlePage(id) {
       </header>
       ${article.heroImage ? `
         <figure class="article-top-image">
-          <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-article-v5" alt="" />
+          <img src="${escapeHtml(article.heroImage)}?v=20260712-stable-links-v9" alt="" />
         </figure>
       ` : ""}
       <section class="article-summary">
@@ -185,7 +185,7 @@ function renderBlock(block) {
     case "image":
       return `
         <figure class="article-image">
-          <img src="${escapeHtml(block.src)}?v=20260712-roadmap-article-v5" alt="${escapeHtml(block.alt)}" />
+          <img src="${escapeHtml(block.src)}?v=20260712-stable-links-v9" alt="${escapeHtml(block.alt)}" />
           <figcaption>${escapeHtml(block.caption)}</figcaption>
         </figure>
       `;
@@ -252,7 +252,7 @@ function renderOtherContents() {
       <div class="link-list">
         ${externalLinks.map((link, index) => `
           <a class="link-card" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">
-            <span>X記事 ${String(index + 1).padStart(2, "0")}</span>
+            <span>X記事 ${String(index + 1).padStart(2, "0")}${link.date ? ` / ${formatDate(link.date)}` : ""}</span>
             <strong>${escapeHtml(link.title)}</strong>
             <p>${escapeHtml(link.description)}</p>
             <small>${escapeHtml(link.url)}</small>

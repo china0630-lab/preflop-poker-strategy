@@ -1,6 +1,7 @@
 window.PREFLOP_ARTICLES = [
   {
     id: "icm-tournament-survival-value",
+    order: 3,
     title: "ICMとは？初心者でも5分でわかる「トーナメントで生き残る価値」",
     subtitle: "トーナメントではチップ＝お金ではない。チップを賞金期待値として考えるICMの入門。",
     author: "ゆうきさん",
@@ -160,6 +161,7 @@ window.PREFLOP_ARTICLES = [
   },
   {
     id: "poker-essence-range-equity",
+    order: 2,
     title: "ポーカーの本質：レンジ表とエクイティで見る勝ち筋",
     subtitle: "プリフロップ表は暗記表ではなく、強いハンドが後ろに残る確率を管理する地図。",
     author: "ゆうきさん",
@@ -271,6 +273,7 @@ window.PREFLOP_ARTICLES = [
   },
   {
     id: "ginga-tournament-roadmap",
+    order: 1,
     title: "GINGA式・トーナメント攻略ロードマップ",
     subtitle: "トーナメント中に迷わず意思決定できるように、学習と実戦の流れを1枚に整理したロードマップ。",
     author: "ゆうきさん",
@@ -357,13 +360,15 @@ window.PREFLOP_ARTICLES = [
 
 window.PREFLOP_LINKS = [
   {
-    title: "ゆうきさんのX記事 01",
-    description: "Xで公開されている関連記事です。",
+    title: "ポーカーは人を理解するゲーム",
+    description: "ゆうきさんのX長文記事。ポーカーをカードだけではなく、人を理解するゲームとして捉える内容です。",
+    date: "2026-07-11",
     url: "https://x.com/yuki_ourspace/status/2075885134180691988?s=46&t=rlkGv0bhxkSvg6Q2_Ffivg"
   },
   {
-    title: "ゆうきさんのX記事 02",
-    description: "追加されたX記事です。",
+    title: "ゆうきさんのX長文記事 02",
+    description: "追加されたX長文記事です。リンク先の本文を確認できるように一覧へ整理しています。",
+    date: "2026-07-12",
     url: "https://x.com/yuki_ourspace/status/2076224712708079927?s=46&t=rlkGv0bhxkSvg6Q2_Ffivg"
   }
 ];
