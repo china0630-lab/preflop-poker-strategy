@@ -273,8 +273,13 @@ window.PREFLOP_ARTICLES = [
 
 window.PREFLOP_LINKS = [
   {
-    title: "ゆうきさんのX記事",
-    description: "関連記事として、その他コンテンツにまとめています。",
+    title: "ゆうきさんのX記事 01",
+    description: "Xで公開されている関連記事です。",
     url: "https://x.com/yuki_ourspace/status/2075885134180691988?s=46&t=rlkGv0bhxkSvg6Q2_Ffivg"
+  },
+  {
+    title: "ゆうきさんのX記事 02",
+    description: "追加されたX記事です。",
+    url: "https://x.com/yuki_ourspace/status/2076224712708079927?s=46&t=rlkGv0bhxkSvg6Q2_Ffivg"
   }
 ];

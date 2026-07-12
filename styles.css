@@ -131,6 +131,12 @@ main {
   min-height: 520px;
 }
 
+.compact-hero {
+  display: block;
+  min-height: auto;
+  padding: clamp(28px, 6vw, 72px) 0 clamp(18px, 4vw, 34px);
+}
+
 .hero-copy h1 {
   margin: 0;
   font-size: clamp(2.45rem, 6vw, 5.5rem);
@@ -211,6 +217,36 @@ main {
   width: min(360px, 78vw);
   border-radius: 50%;
   box-shadow: var(--shadow);
+}
+
+.roadmap-feature {
+  margin-top: 18px;
+}
+
+.roadmap-feature h2 {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  line-height: 1.35;
+}
+
+.roadmap-image {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: clamp(10px, 2vw, 16px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.07);
+  overflow: hidden;
+}
+
+.roadmap-image img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: min(86vh, 980px);
+  object-fit: contain;
 }
 
 .summary-band {
@@ -643,6 +679,13 @@ blockquote {
   border-left: 5px solid var(--green);
 }
 
+.link-card small {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .footer {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
@@ -668,6 +711,10 @@ blockquote {
     grid-template-columns: 1fr;
     min-height: auto;
     padding-top: 28px;
+  }
+
+  .compact-hero {
+    padding-top: 16px;
   }
 
   .hero-visual {
@@ -702,8 +749,21 @@ blockquote {
   }
 
   .card-thumb {
-    min-height: 170px;
-    max-height: 280px;
+    min-height: 150px;
+    max-height: 240px;
+  }
+
+  .roadmap-feature {
+    margin-top: 8px;
+  }
+
+  .roadmap-image {
+    border-radius: 14px;
+    padding: 8px;
+  }
+
+  .roadmap-image img {
+    max-height: 78vh;
   }
 
   .article-card-body {
