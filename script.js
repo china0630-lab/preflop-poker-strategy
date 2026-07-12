@@ -89,6 +89,11 @@ function renderArticleGrid(items, title, subtitle) {
       <div class="cards">
         ${items.map((article) => `
           <article class="article-card">
+            ${article.heroImage ? `
+              <figure class="card-thumb">
+                <img src="${escapeHtml(article.heroImage)}" alt="" />
+              </figure>
+            ` : ""}
             <div class="card-meta">
               <span>${escapeHtml(article.category)}</span>
               <span>${formatDate(article.date)}</span>

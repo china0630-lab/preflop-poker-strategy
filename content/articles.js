@@ -8,7 +8,7 @@ window.PREFLOP_ARTICLES = [
     date: "2026-07-12",
     readTime: "5分",
     tags: ["ICM", "トーナメント", "リスクプレミアム"],
-    heroImage: "./assets/articles/icm-tournament-survival-value/01-tournament-roadmap.jpg",
+    heroImage: "./assets/articles/icm-tournament-survival-value/01-icm-summary.png",
     summary: [
       "ICMとは、チップをお金として考えるためのルール。",
       "トーナメントでは、チップを2倍にしても賞金期待値が2倍になるとは限らない。",
@@ -61,9 +61,9 @@ window.PREFLOP_ARTICLES = [
       },
       {
         type: "image",
-        src: "./assets/articles/icm-tournament-survival-value/01-tournament-roadmap.jpg",
-        alt: "GINGA式トーナメント強化ロードマップ",
-        caption: "送付画像：GINGA式・トーナメント強化ロードマップ"
+        src: "./assets/articles/icm-tournament-survival-value/01-icm-summary.png",
+        alt: "ICMを8枚のスライドで説明した図解",
+        caption: "送付画像：ICMの要点を8枚で整理した図解"
       },
       {
         type: "heading",
@@ -167,7 +167,7 @@ window.PREFLOP_ARTICLES = [
     date: "2026-06-13",
     readTime: "8分",
     tags: ["プリフロップ", "レンジ", "エクイティ"],
-    heroImage: "./assets/poker-essence-source.jpg",
+    heroImage: "./assets/articles/poker-essence-range-equity/02-preflop-range-chart.jpg",
     summary: [
       "AAが配られる確率は約220分の1。",
       "自分の手だけではなく、後ろに強いハンドが残る確率を見る。",
@@ -199,6 +199,26 @@ window.PREFLOP_ARTICLES = [
       {
         type: "quote",
         text: "レンジ表とは「後ろにもっと強いハンドがいる確率」を管理するための地図です。単なる暗記表ではありません。"
+      },
+      {
+        type: "heading",
+        text: "6/13生成画像：プリフロップ理解の補足"
+      },
+      {
+        type: "paragraph",
+        text: "6/13に生成された画像は、プリフロップの話を補足する資料としてまとめています。ロードマップ画像は学習の全体像、レンジ表画像はポジションごとに参加できるハンドが広がるイメージです。"
+      },
+      {
+        type: "image",
+        src: "./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg",
+        alt: "GINGA式トーナメント強化ロードマップ",
+        caption: "6/13生成画像：トーナメント強化ロードマップ。プリフロップ、ショートスタック、ポストフロップ、ICM、実戦ログの流れを1枚で整理。"
+      },
+      {
+        type: "image",
+        src: "./assets/articles/poker-essence-range-equity/02-preflop-range-chart.jpg",
+        alt: "ポジション別のプリフロップオープンレンジ表",
+        caption: "6/13生成画像：ポジション別オープンレンジ表。UTGからBTNに近づくほど、参加できるハンドの範囲が広がることを示しています。"
       },
       {
         type: "heading",
