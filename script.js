@@ -16,6 +16,21 @@ function escapeHtml(value = "") {
   })[char]);
 }
 
+function breakableText(value = "", interval = 8) {
+  return Array.from(String(value))
+    .map((char, index) => `${escapeHtml(char)}${(index + 1) % interval === 0 ? "<wbr>" : "&#8203;"}`)
+    .join("");
+}
+
+function chunkedTitle(value = "", interval = 11) {
+  const chars = Array.from(String(value));
+  const chunks = [];
+  for (let i = 0; i < chars.length; i += interval) {
+    chunks.push(chars.slice(i, i + interval).map(escapeHtml).join(""));
+  }
+  return chunks.map((chunk) => `<span class="title-chunk">${chunk}</span>`).join("");
+}
+
 function formatDate(date) {
   return date.replaceAll("-", ".");
 }
@@ -39,7 +54,7 @@ function renderHome() {
     <section class="hero compact-hero">
       <div class="hero-copy">
         <p class="eyebrow">PreFlop Poker Guide</p>
-        <h1>プリフロップ大宮ポーカー攻略</h1>
+        <h1><span>プリフロップ大宮</span><span>ポーカー攻略</span></h1>
         <p class="lead">
           ゆうきさんの記事とX投稿を、スマホでも読みやすい順番に整理したページです。
         </p>
@@ -50,29 +65,8 @@ function renderHome() {
       </div>
     </section>
 
-    ${renderRoadmapFeature()}
     ${renderArticleGrid(latest, "連載一覧", "第1回から順番に読む")}
     ${renderOtherContents()}
-  `;
-}
-
-function renderRoadmapFeature() {
-  const roadmapArticle = articles.find((article) => article.id === "ginga-tournament-roadmap");
-  const roadmapHref = roadmapArticle ? articleUrl(roadmapArticle) : "#articles";
-
-  return `
-    <section class="roadmap-feature">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Tournament Roadmap</p>
-          <h2>GINGA式・トーナメント攻略ロードマップ</h2>
-        </div>
-      </div>
-      <figure class="roadmap-image">
-        <img src="./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg?v=20260712-stable-links-v9" alt="GINGA式トーナメント強化ロードマップ" />
-      </figure>
-      <a class="roadmap-link" href="${roadmapHref}">ロードマップ記事を読む</a>
-    </section>
   `;
 }
 
@@ -101,7 +95,7 @@ function renderArticleGrid(items, title, subtitle) {
           <article class="article-card">
             ${article.heroImage ? `
               <figure class="card-thumb">
-                <img src="${escapeHtml(article.heroImage)}?v=20260712-stable-links-v9" alt="" />
+                <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-clean-v10" alt="" />
               </figure>
             ` : ""}
             <div class="article-card-body">
@@ -111,7 +105,7 @@ function renderArticleGrid(items, title, subtitle) {
                 <span>${formatDate(article.date)}</span>
                 <span>読了 ${escapeHtml(article.readTime)}</span>
               </div>
-              <h3>${escapeHtml(article.title)}</h3>
+              <h3>${chunkedTitle(article.title, 13)}</h3>
               <p>${escapeHtml(article.subtitle)}</p>
               <ul>
                 ${article.summary.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
@@ -142,7 +136,7 @@ function renderArticlePage(id) {
       <header class="article-hero">
         <div>
           <p class="eyebrow">${escapeHtml(article.category)} / ${formatDate(article.date)}</p>
-          <h1>${escapeHtml(article.title)}</h1>
+          <h1>${chunkedTitle(article.title, 10)}</h1>
           <p>${escapeHtml(article.subtitle)}</p>
           <div class="article-meta">
             <span>${escapeHtml(article.author)}</span>
@@ -152,7 +146,7 @@ function renderArticlePage(id) {
       </header>
       ${article.heroImage ? `
         <figure class="article-top-image">
-          <img src="${escapeHtml(article.heroImage)}?v=20260712-stable-links-v9" alt="" />
+          <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-clean-v10" alt="" />
         </figure>
       ` : ""}
       <section class="article-summary">
@@ -175,7 +169,7 @@ function renderBlock(block) {
     case "lead":
       return `<p class="article-lead">${escapeHtml(block.text)}</p>`;
     case "heading":
-      return `<h2>${escapeHtml(block.text)}</h2>`;
+      return `<h2>${breakableText(block.text, 9)}</h2>`;
     case "paragraph":
       return `<p>${escapeHtml(block.text)}</p>`;
     case "quote":
@@ -185,7 +179,7 @@ function renderBlock(block) {
     case "image":
       return `
         <figure class="article-image">
-          <img src="${escapeHtml(block.src)}?v=20260712-stable-links-v9" alt="${escapeHtml(block.alt)}" />
+          <img src="${escapeHtml(block.src)}?v=20260712-roadmap-clean-v10" alt="${escapeHtml(block.alt)}" />
           <figcaption>${escapeHtml(block.caption)}</figcaption>
         </figure>
       `;

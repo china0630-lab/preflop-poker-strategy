@@ -19,7 +19,7 @@
 記事URLは次の形式です。
 
 ```text
-https://china0630-lab.github.io/preflop-poker-strategy/#article/{article-id}
+https://china0630-lab.github.io/preflop-omiya-poker-guide/#article/{article-id}
 ```
 
 サイト本体のURLは固定し、記事だけを追加していきます。

@@ -58,7 +58,7 @@
 ## 技術メモ
 
 - 現在の公開URL予定:
-  - `https://china0630-lab.github.io/preflop-poker-strategy/`
+  - `https://china0630-lab.github.io/preflop-omiya-poker-guide/`
 - 旧URL:
   - `https://china0630-lab.github.io/preflop-poker-members/`
 - Supabaseの公開可能キーはフロントに置いてよい

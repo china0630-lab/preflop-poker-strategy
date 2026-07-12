@@ -65,7 +65,7 @@ Supabaseの `Authentication` で確認する。
 - Site URL:
 
 ```text
-https://china0630-lab.github.io/preflop-poker-strategy/
+https://china0630-lab.github.io/preflop-omiya-poker-guide/
 ```
 
 Redirect URLsにも同じURLを追加する。

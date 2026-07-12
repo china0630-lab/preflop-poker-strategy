@@ -144,6 +144,14 @@ main {
   letter-spacing: 0;
 }
 
+.hero-copy h1 span {
+  display: block;
+}
+
+.title-chunk {
+  display: block;
+}
+
 .page-title h1,
 .article-hero h1 {
   margin: 0;
@@ -217,50 +225,6 @@ main {
   width: min(360px, 78vw);
   border-radius: 50%;
   box-shadow: var(--shadow);
-}
-
-.roadmap-feature {
-  margin-top: 18px;
-}
-
-.roadmap-feature h2 {
-  overflow-wrap: anywhere;
-  word-break: break-all;
-  line-height: 1.35;
-}
-
-.roadmap-image {
-  display: grid;
-  place-items: center;
-  margin: 0;
-  padding: clamp(10px, 2vw, 16px);
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.07);
-  overflow: hidden;
-}
-
-.roadmap-image img {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  max-height: min(86vh, 980px);
-  object-fit: contain;
-}
-
-.roadmap-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  margin-top: 12px;
-  padding: 9px 16px;
-  color: #fff;
-  background: var(--blue);
-  border-radius: 999px;
-  font-weight: 900;
-  text-decoration: none;
 }
 
 .summary-band {
@@ -747,9 +711,33 @@ blockquote {
 }
 
 @media (max-width: 720px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   main {
-    width: calc(100vw - 48px);
-    padding-top: 18px;
+    width: 100%;
+    padding: 18px 16px 52px;
+    overflow: visible;
+  }
+
+  .hero,
+  .compact-hero,
+  .cards,
+  .series-list,
+  .link-list,
+  .article-card,
+  .link-card,
+  .article-hero,
+  .article-top-image,
+  .article-summary,
+  .article-body {
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    min-width: 0;
   }
 
   .cards,
@@ -761,61 +749,54 @@ blockquote {
 
   .article-card {
     grid-template-columns: 1fr;
-    width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
+    width: 100%;
+    max-width: 100%;
     padding: 16px;
   }
 
   .link-card {
     grid-template-columns: 1fr;
-    width: calc(100vw - 48px);
-    max-width: calc(100vw - 48px);
+    width: 100%;
+    max-width: 100%;
     padding: 16px;
   }
 
   .card-thumb {
     width: 100%;
-    max-width: calc(100vw - 82px);
+    max-width: 100%;
     min-height: 150px;
     max-height: 240px;
   }
 
   .card-thumb img {
     width: 100%;
-    max-width: calc(100vw - 82px);
-  }
-
-  .roadmap-feature {
-    margin-top: 8px;
-  }
-
-  .roadmap-image {
-    border-radius: 14px;
-    padding: 8px;
-  }
-
-  .roadmap-image img {
-    max-height: 78vh;
+    max-width: 100%;
   }
 
   .article-card-body {
     width: 100%;
-    max-width: min(100%, 280px);
+    max-width: 100%;
   }
 
   .article-card h3 {
-    font-size: 1.28rem;
+    font-size: 1.08rem;
     line-height: 1.45;
     width: 100%;
-    max-width: min(100%, 280px);
+    max-width: 100%;
     white-space: normal;
+  }
+
+  .article-card p,
+  .article-card li {
+    font-size: 0.94rem;
+    line-height: 1.75;
   }
 
   .link-card strong,
   .link-card p,
   .link-card small,
   .footer p {
-    max-width: min(100%, 280px);
+    max-width: 100%;
     overflow-wrap: anywhere;
     word-break: break-all;
   }
@@ -827,14 +808,52 @@ blockquote {
   .hero-copy h1,
   .page-title h1,
   .article-hero h1 {
-    font-size: clamp(1.72rem, 8vw, 2.25rem);
-    line-height: 1.16;
+    font-size: clamp(1.56rem, 6.8vw, 1.95rem);
+    line-height: 1.22;
+    overflow-wrap: anywhere;
     word-break: break-all;
+    line-break: anywhere;
   }
 
   .article-hero,
   .article-body {
     border-radius: 18px;
+  }
+
+  .article-hero,
+  .article-summary,
+  .article-body,
+  .article-top-image,
+  .article-image,
+  .info-table,
+  .timeline {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .article-hero {
+    padding: 24px 18px;
+  }
+
+  .article-body {
+    padding: 18px;
+  }
+
+  .article-lead {
+    padding: 14px;
+    font-size: 1rem !important;
+    line-height: 1.75;
+  }
+
+  .article-body p,
+  .article-body li,
+  .article-summary li,
+  .info-table div,
+  .timeline li,
+  blockquote {
+    font-size: 0.96rem;
+    overflow-wrap: anywhere;
+    word-break: break-all;
   }
 
   .info-table div,
