@@ -57,6 +57,9 @@ function renderHome() {
 }
 
 function renderRoadmapFeature() {
+  const roadmapArticle = articles.find((article) => article.id === "ginga-tournament-roadmap");
+  const roadmapHref = roadmapArticle ? articleUrl(roadmapArticle) : "#articles";
+
   return `
     <section class="roadmap-feature">
       <div class="section-head">
@@ -66,8 +69,9 @@ function renderRoadmapFeature() {
         </div>
       </div>
       <figure class="roadmap-image">
-        <img src="./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg?v=20260712-home-roadmap-v4" alt="GINGA式トーナメント強化ロードマップ" />
+        <img src="./assets/articles/poker-essence-range-equity/01-tournament-roadmap.jpg?v=20260712-roadmap-article-v5" alt="GINGA式トーナメント強化ロードマップ" />
       </figure>
+      <a class="roadmap-link" href="${roadmapHref}">ロードマップ記事を読む</a>
     </section>
   `;
 }
@@ -97,7 +101,7 @@ function renderArticleGrid(items, title, subtitle) {
           <article class="article-card">
             ${article.heroImage ? `
               <figure class="card-thumb">
-                <img src="${escapeHtml(article.heroImage)}?v=20260712-home-roadmap-v4" alt="" />
+                <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-article-v5" alt="" />
               </figure>
             ` : ""}
             <div class="article-card-body">
@@ -148,7 +152,7 @@ function renderArticlePage(id) {
       </header>
       ${article.heroImage ? `
         <figure class="article-top-image">
-          <img src="${escapeHtml(article.heroImage)}?v=20260712-home-roadmap-v4" alt="" />
+          <img src="${escapeHtml(article.heroImage)}?v=20260712-roadmap-article-v5" alt="" />
         </figure>
       ` : ""}
       <section class="article-summary">
@@ -181,7 +185,7 @@ function renderBlock(block) {
     case "image":
       return `
         <figure class="article-image">
-          <img src="${escapeHtml(block.src)}?v=20260712-home-roadmap-v4" alt="${escapeHtml(block.alt)}" />
+          <img src="${escapeHtml(block.src)}?v=20260712-roadmap-article-v5" alt="${escapeHtml(block.alt)}" />
           <figcaption>${escapeHtml(block.caption)}</figcaption>
         </figure>
       `;
