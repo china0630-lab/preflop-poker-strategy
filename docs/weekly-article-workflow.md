@@ -12,14 +12,14 @@
 4. `scripts/add-article.mjs` を実行して記事と画像を自動追加する
 5. ブラウザで記事一覧と詳細ページを確認する
 6. GitにコミットしてGitHubへpushする
-7. GitHub Pagesのデプロイ完了後、公開URLで確認する
+7. Vercelのデプロイ完了後、公開URLで確認する
 
 ## URLの考え方
 
 記事URLは次の形式です。
 
 ```text
-https://china0630-lab.github.io/preflop-omiya-poker-guide/#article/{article-id}
+https://preflop-poker-strategy.vercel.app/#article/{article-id}
 ```
 
 サイト本体のURLは固定し、記事だけを追加していきます。

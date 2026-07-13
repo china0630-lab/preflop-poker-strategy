@@ -2,7 +2,7 @@
 
 ## 完了済み
 
-- GitHub Pagesで固定URL公開
+- Vercelで固定URL公開
 - Supabase Auth接続
 - PreFlop専用テーブル作成
   - `preflop_profiles`
@@ -58,7 +58,7 @@
 ## 技術メモ
 
 - 現在の公開URL予定:
-  - `https://china0630-lab.github.io/preflop-omiya-poker-guide/`
+  - `https://preflop-poker-strategy.vercel.app/`
 - 旧URL:
   - `https://china0630-lab.github.io/preflop-poker-members/`
 - Supabaseの公開可能キーはフロントに置いてよい

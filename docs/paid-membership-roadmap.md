@@ -59,5 +59,5 @@ customer.subscription.deleted -> canceled
 
 ## 重要
 
-Supabase Authだけでは、GitHub Pages上の静的な記事データを完全には隠せません。
+Supabase Authだけでは、Vercel上の静的な記事データを完全には隠せません。
 月額課金を開始する前に、記事本文もSupabase側へ移し、`membership_status = active` のユーザーだけ取得できるようにします。

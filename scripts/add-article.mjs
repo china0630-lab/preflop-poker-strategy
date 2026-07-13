@@ -61,7 +61,7 @@ writeArticles(articlesPath, articles);
 
 console.log(`Added article: ${article.title}`);
 console.log(`ID: ${article.id}`);
-console.log(`URL: https://china0630-lab.github.io/preflop-omiya-poker-guide/#article/${article.id}`);
+console.log(`URL: https://preflop-poker-strategy.vercel.app/#article/${article.id}`);
 if (copiedImages.length) {
   console.log(`Images: ${copiedImages.length}`);
 }
