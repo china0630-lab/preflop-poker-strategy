@@ -203,14 +203,6 @@ window.PREFLOP_ARTICLES = [
         text: "レンジ表とは「後ろにもっと強いハンドがいる確率」を管理するための地図です。単なる暗記表ではありません。"
       },
       {
-        type: "heading",
-        text: "6/13生成画像：プリフロップ理解の補足"
-      },
-      {
-        type: "paragraph",
-        text: "6/13に生成された画像は、プリフロップの話を補足する資料としてまとめています。レンジ表画像では、ポジションごとに参加できるハンドが広がるイメージを確認できます。"
-      },
-      {
         type: "image",
         src: "./assets/articles/poker-essence-range-equity/02-preflop-range-chart.jpg",
         alt: "ポジション別のプリフロップオープンレンジ表",
