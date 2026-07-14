@@ -226,9 +226,9 @@ function renderBlock(block) {
 function renderOtherPage() {
   app.innerHTML = `
     <section class="page-title">
-      <p class="eyebrow">Other Contents</p>
-      <h1>その他コンテンツ</h1>
-      <p>記事以外の関連リンクをまとめています。</p>
+      <p class="eyebrow">X Posts</p>
+      <h1>その他コンテンツ（X記事）</h1>
+      <p>ゆうきさんのX記事リンクをまとめています。</p>
     </section>
     ${renderOtherContents()}
   `;
@@ -239,8 +239,8 @@ function renderOtherContents() {
     <section class="other-contents">
       <div class="section-head">
         <div>
-          <p class="eyebrow">Links</p>
-          <h2>その他コンテンツ</h2>
+          <p class="eyebrow">X Posts</p>
+          <h2>その他コンテンツ（X記事）</h2>
         </div>
       </div>
       <div class="link-list">
@@ -248,8 +248,7 @@ function renderOtherContents() {
           <a class="link-card" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">
             <span>X記事 ${String(index + 1).padStart(2, "0")}${link.date ? ` / ${formatDate(link.date)}` : ""}</span>
             <strong>${escapeHtml(link.title)}</strong>
-            <p>${escapeHtml(link.description)}</p>
-            <small>${escapeHtml(link.url)}</small>
+            <small>Xで読む</small>
           </a>
         `).join("")}
       </div>

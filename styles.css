@@ -319,6 +319,7 @@ main {
 .link-card {
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
 .article-card-body {
@@ -361,6 +362,12 @@ main {
   line-height: 1.35;
   overflow-wrap: anywhere;
   word-break: break-all;
+}
+
+.link-card strong {
+  max-width: 920px;
+  font-size: clamp(1.35rem, 2.5vw, 1.95rem);
+  line-height: 1.32;
 }
 
 .article-card p,
@@ -660,9 +667,12 @@ blockquote {
 }
 
 .link-card small {
-  color: var(--muted);
-  font-size: 0.82rem;
+  display: inline-flex;
+  align-self: flex-start;
+  color: var(--blue);
+  font-size: 0.92rem;
   line-height: 1.5;
+  font-weight: 900;
   overflow-wrap: anywhere;
 }
 
