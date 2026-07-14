@@ -350,5 +350,11 @@ window.PREFLOP_LINKS = [
     description: "ゆうきさんのX記事です。タイトルとリンクを残し、本文はX側で確認できるようにしています。",
     date: "2026-07-12",
     url: "https://x.com/yuki_ourspace/status/2076224712708079927?s=46&t=rlkGv0bhxkSvg6Q2_Ffivg"
+  },
+  {
+    title: "大型大会で高確率で勝つ人の“観察で得た情報”の使い方",
+    description: "ゆうきさんのX記事です。大会で得た観察情報の使い方を確認できるように一覧へ追加しています。",
+    date: "2026-07-14",
+    url: "https://x.com/yuki_ourspace/status/2076586864119841131?s=46"
   }
 ];
