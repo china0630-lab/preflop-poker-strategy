@@ -358,5 +358,10 @@ window.PREFLOP_LINKS = [
     title: "ポーカーで長く勝つメンタル ※超重要",
     date: "2026-07-14",
     url: "https://x.com/yuki_ourspace/status/2076968138810515528?s=46"
+  },
+  {
+    title: "あのハンドの「違和感の正体」※傑作",
+    date: "2026-07-15",
+    url: "https://x.com/yuki_ourspace/status/2077321095393485211?s=46"
   }
 ];
