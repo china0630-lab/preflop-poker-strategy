@@ -363,5 +363,10 @@ window.PREFLOP_LINKS = [
     title: "あのハンドの「違和感の正体」※傑作",
     date: "2026-07-15",
     url: "https://x.com/yuki_ourspace/status/2077321095393485211?s=46"
+  },
+  {
+    title: "自分が成長すると、世界の見え方が変わる",
+    date: "2026-07-16",
+    url: "https://x.com/yuki_ourspace/status/2077693286270267818?s=46"
   }
 ];
